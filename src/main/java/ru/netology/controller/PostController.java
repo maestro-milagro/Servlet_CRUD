@@ -23,8 +23,12 @@ public class PostController {
     response.getWriter().print(gson.toJson(data));
   }
 
-  public void getById(long id, HttpServletResponse response) {
+  public void getById(long id, HttpServletResponse response) throws IOException {
     // TODO: deserialize request & serialize response
+    response.setContentType(APPLICATION_JSON);
+    final var element = service.getById(id);
+    final var gson = new Gson();
+    response.getWriter().print(gson.toJson(element));
   }
 
   public void save(Reader body, HttpServletResponse response) throws IOException {
@@ -35,7 +39,12 @@ public class PostController {
     response.getWriter().print(gson.toJson(data));
   }
 
-  public void removeById(long id, HttpServletResponse response) {
+  public void removeById(long id, HttpServletResponse response) throws IOException {
     // TODO: deserialize request & serialize response
+    response.setContentType(APPLICATION_JSON);
+    service.removeById(id);
+    final var gson = new Gson();
+    String message = "Пост был удалён";
+    response.getWriter().print(gson.toJson(message));
   }
 }

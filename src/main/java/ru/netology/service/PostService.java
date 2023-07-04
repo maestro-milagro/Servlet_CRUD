@@ -5,6 +5,7 @@ import ru.netology.model.Post;
 import ru.netology.repository.PostRepository;
 
 import java.util.List;
+import java.util.Set;
 
 public class PostService {
   private final PostRepository repository;
@@ -13,7 +14,7 @@ public class PostService {
     this.repository = repository;
   }
 
-  public List<Post> all() {
+  public Set<Post> all() {
     return repository.all();
   }
 
