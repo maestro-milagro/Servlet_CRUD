@@ -8,36 +8,31 @@ import java.util.concurrent.atomic.AtomicLong;
 
 // Stub
 public class PostRepository {
-  protected Set<Post> postCollection = Collections.synchronizedSet(new HashSet<>());
-  protected AtomicLong idCount = new AtomicLong(0);
-  public Set<Post> all() {
-      return postCollection;
-  }
+    protected Map<Long, Post> postCollection = Collections.synchronizedMap(new HashMap<>());
+    protected AtomicLong idCount = new AtomicLong(0);
 
-  public Optional<Post> getById(long id) {
-    return postCollection.stream()
-            .filter(s->s.getId()==id)
-            .findAny();
-  }
+    public Map<Long, Post> all() {
+        return postCollection;
+    }
 
-  public Post save(Post post) {
-      if (post.getId()==0) {
-          post.setId(idCount.getAndIncrement());
-          postCollection.add(post);
-      }else if (getById(post.getId()).isPresent()) {
-          removeById(post.getId());
-          postCollection.add(post);
-      } else {
-          throw new NotFoundException("Выбран несуществующий пост");
-      }
-      return post;
-  }
+    public Optional<Post> getById(long id) {
+        return Optional.ofNullable(postCollection.get(id));
+    }
 
-  public void removeById(long id) {
-      Optional<Post> rem = postCollection.stream()
-            .filter(s->s.getId()==id)
-            .findAny();
-      rem.ifPresent(post -> postCollection.remove(post));
+    public Post save(Post post) {
+        if (post.getId() == 0) {
+            post.setId(idCount.getAndIncrement());
+            postCollection.put(post.getId(), post);
+        } else if (getById(post.getId()).isPresent()) {
+            removeById(post.getId());
+            postCollection.put(post.getId(), post);
+        } else {
+            throw new NotFoundException("Выбран несуществующий пост");
+        }
+        return post;
+    }
 
-  }
+    public void removeById(long id) {
+        postCollection.remove(id);
+    }
 }
