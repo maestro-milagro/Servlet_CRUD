@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 // Stub
-@Repository
 public class PostRepository {
     protected Map<Long, Post> postCollection = Collections.synchronizedMap(new HashMap<>());
     protected AtomicLong idCount = new AtomicLong(0);
