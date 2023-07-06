@@ -1,5 +1,6 @@
 package ru.netology.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.netology.exeption.NotFoundException;
 import ru.netology.model.Post;
 
@@ -7,6 +8,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 // Stub
+@Repository
 public class PostRepository {
     protected Map<Long, Post> postCollection = Collections.synchronizedMap(new HashMap<>());
     protected AtomicLong idCount = new AtomicLong(0);
