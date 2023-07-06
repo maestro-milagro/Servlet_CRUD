@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MainServlet extends HttpServlet {
   private PostController controller;
-  protected List<String> possiblePaths = Collections.synchronizedList(List.of("/api/posts"));
+  protected List<String> possiblePaths = List.of("/api/posts");
 
   @Override
   public void init() {
